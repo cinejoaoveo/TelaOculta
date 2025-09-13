@@ -1,9 +1,8 @@
 <div class="min-h-screen bg-black text-white">
-    <!-- Header -->
     <header class="fixed top-0 left-0 right-0 z-50 bg-black/80 p-4">
       <div class="container mx-auto flex items-center justify-between">
         <a routerLink="/home">
-          <img src="https://i.ibb.co/svR50X1n/playmax-logo.png" alt="PlayMax Logo" class="w-36 h-auto">
+          <img src="https://i.ibb.co/qLR0GgPV/Tela-Oculta-Logo.png" alt="TelaOculta Logo" class="w-36 h-auto">
         </a>
         <div class="flex items-center space-x-2">
             <button (click)="toggleSearch()" class="text-gray-300 hover:text-white p-2 rounded-full hover:bg-white/10">
@@ -34,7 +33,6 @@
             </div>
         }
 
-        <!-- Recommendations -->
         @if (recommendations().length > 0) {
             <section class="mt-12">
                 <h2 class="text-2xl font-bold mb-4">Recomendações</h2>

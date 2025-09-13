@@ -7,7 +7,7 @@ const MAX_ITEMS = 20;
 @Injectable({ providedIn: 'root' })
 export class ContinueWatchingService {
   private readonly firebaseService = inject(FirebaseService);
-  private baseStorageKey = 'playmax-continue-watching';
+  private baseStorageKey = 'telaoculta-continue-watching';
   private currentStorageKey = signal<string>(`${this.baseStorageKey}-guest`);
 
   continueWatchingItems = signal<ContinueWatchingItem[]>([]);
@@ -54,9 +54,7 @@ export class ContinueWatchingService {
     };
     
     this.continueWatchingItems.update(current => {
-        // Remove existing item if it's the same movie/series
         const filtered = current.filter(item => item.id !== newItem.id || item.type !== newItem.type);
-        // Add new item to the beginning and slice to max length
         const updatedList = [newItem, ...filtered].slice(0, MAX_ITEMS);
         return updatedList;
     });

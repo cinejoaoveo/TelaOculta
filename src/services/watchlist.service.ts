@@ -7,7 +7,7 @@ type WatchlistItem = { id: number; type: 'movie' | 'tv' };
 @Injectable({ providedIn: 'root' })
 export class WatchlistService {
   private readonly firebaseService = inject(FirebaseService);
-  private baseStorageKey = 'playmax-watchlist';
+  private baseStorageKey = 'telaoculta-watchlist';
   private currentStorageKey = signal<string>(`${this.baseStorageKey}-guest`);
 
   watchlist = signal<WatchlistItem[]>([]);

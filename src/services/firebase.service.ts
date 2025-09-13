@@ -15,13 +15,14 @@ import {
 import { AuthCredential } from '../models/media.model';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA1ekfeDxqE03lpAQcc1zN-QmsBtIktG44",
-  authDomain: "playmaxk.firebaseapp.com",
-  projectId: "playmaxk",
-  storageBucket: "playmaxk.appspot.com",
-  messagingSenderId: "459657528568",
-  appId: "1:459657528568:web:afc17a0aebcbf19ecb670d"
+  apiKey: "AIzaSyDhKz3v_JFJ39vPlBZLVrQ4wtC11-iy32Y",
+  authDomain: "telaocultak.firebaseapp.com",
+  projectId: "telaocultak",
+  storageBucket: "telaocultak.firebasestorage.app",
+  messagingSenderId: "539635191596",
+  appId: "1:539635191596:web:e06d067b8ea71105f92689"
 };
+
 
 @Injectable({
   providedIn: 'root',
@@ -42,11 +43,6 @@ export class FirebaseService {
     onAuthStateChanged(this.auth, user => {
       this.ngZone.run(() => {
         this.currentUser.set(user);
-        if (user) {
-          // console.log('User is signed in:', user);
-        } else {
-          // console.log('User is signed out.');
-        }
       });
     });
   }

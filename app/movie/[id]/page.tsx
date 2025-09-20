@@ -22,7 +22,12 @@ function formatRuntime(minutes: number): string {
   return `${h}h ${m}m`;
 }
 
-export default async function MovieDetailPage({ params }: { params: { id: string } }) {
+// TIPO ADICIONADO PARA MAIOR CLAREZA E CORREÇÃO DO ERRO
+type MovieDetailPageProps = {
+  params: { id: string };
+};
+
+export default async function MovieDetailPage({ params }: MovieDetailPageProps) {
   const movieId = Number(params.id);
   const movie = await getMovieDetails(movieId);
   const credits = await getCredits('movie', movieId);
@@ -44,7 +49,6 @@ export default async function MovieDetailPage({ params }: { params: { id: string
       </div>
 
       <div className="container mx-auto px-4 md:px-16 pb-16 -mt-32 relative z-10">
-        {/* LAYOUT CORRIGIDO AQUI */}
         <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left md:space-x-8">
           {/* Poster */}
           <div className="flex-shrink-0 w-48 md:w-64">

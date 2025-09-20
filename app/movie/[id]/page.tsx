@@ -26,8 +26,8 @@ type MovieDetailPageProps = {
   params: { id: string };
 };
 
-// ADICIONE ESTA LINHA PARA IGNORAR O ERRO
-// @ts-ignore
+// CORREÇÃO: TROCADO @ts-ignore POR @ts-expect-error
+// @ts-expect-error
 export default async function MovieDetailPage({ params }: MovieDetailPageProps) {
   const movieId = Number(params.id);
   const movie = await getMovieDetails(movieId);

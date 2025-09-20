@@ -21,10 +21,12 @@ export default function MediaCard({ media }: MediaCardProps) {
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
         <div className="w-full h-full flex items-center justify-center">
-          {/* ÍCONE DE PLAY ATUALIZADO */}
-          <img
+          {/* IMAGEM CORRIGIDA AQUI */}
+          <Image
             src="https://i.ibb.co/Q7V0pybV/bot-o-play-sem-bg.png"
             alt="Play"
+            width={80}
+            height={80}
             className="w-20 h-20 object-contain drop-shadow-lg transform scale-75 group-hover:scale-100 transition-transform duration-300"
           />
         </div>

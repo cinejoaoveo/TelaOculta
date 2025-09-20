@@ -18,7 +18,8 @@ async function SeasonEpisodes({ seriesId, seasonNumber }: { seriesId: number, se
                         <p className="text-gray-400 text-sm line-clamp-2">{episode.overview}</p>
                     </div>
                     <Link href={`/player/tv/${seriesId}/${seasonNumber}/${episode.episode_number}`} target="_blank" className="flex-shrink-0">
-                        <img src="https://i.ibb.co/hRR6bVmk/Tela-Oculta-Icon.png" alt="Play Episode" className="w-12 h-12 object-contain transition-transform duration-300 hover:scale-110" />
+                        {/* IMAGEM CORRIGIDA AQUI */}
+                        <Image src="https://i.ibb.co/hRR6bVmk/Tela-Oculta-Icon.png" alt="Play Episode" width={48} height={48} className="w-12 h-12 object-contain transition-transform duration-300 hover:scale-110" />
                     </Link>
                 </div>
             ))}
@@ -26,20 +27,15 @@ async function SeasonEpisodes({ seriesId, seasonNumber }: { seriesId: number, se
     );
 }
 
-
+// ... (o resto do arquivo continua igual)
 export default async function SeriesDetailPage({ params, searchParams }: { params: { id: string }, searchParams: { season: string } }) {
   const seriesId = Number(params.id);
   const series = await getSeriesDetails(seriesId);
-  const credits = await getCredits('tv', seriesId);
-
-  // Define a temporada selecionada (padrão para a primeira, se existir)
-  const selectedSeasonNumber = Number(searchParams.season) || (series.seasons.find(s => s.season_number > 0)?.season_number || 1);
   
-  const rating = Math.round((series.vote_average || 0) / 2);
+  const selectedSeasonNumber = Number(searchParams.season) || (series.seasons.find(s => s.season_number > 0)?.season_number || 1);
 
   return (
     <div className="text-white">
-      {/* Backdrop */}
       <div className="relative w-full h-[50vh] md:h-[60vh]">
         <Image
           src={getImageUrl(series.backdrop_path, 'original')}
@@ -53,7 +49,6 @@ export default async function SeriesDetailPage({ params, searchParams }: { param
 
       <div className="container mx-auto px-4 md:px-16 pb-16 -mt-32 relative z-10">
         <div className="md:flex md:space-x-8">
-          {/* Poster */}
           <div className="flex-shrink-0 w-48 md:w-64 mx-auto md:mx-0">
             <Image
               src={getImageUrl(series.poster_path, 'w500')}
@@ -63,21 +58,16 @@ export default async function SeriesDetailPage({ params, searchParams }: { param
               className="rounded-lg shadow-2xl"
             />
           </div>
-
-          {/* Details */}
           <div className="flex-grow pt-8 md:pt-16 text-center md:text-left">
             <h1 className="text-4xl md:text-5xl font-bold">{series.name}</h1>
             <div className="flex items-center justify-center md:justify-start space-x-4 my-4 text-gray-300">
               <span>{series.first_air_date?.substring(0, 4)}</span>
               <span>{series.number_of_seasons} Temporada(s)</span>
-              {/* Star Rating Component */}
             </div>
             <p className="text-gray-300 md:text-lg mb-6">{series.overview}</p>
-            {/* Buttons */}
           </div>
         </div>
         
-        {/* Seasons and Episodes */}
         <div className="mt-16">
           <h2 className="text-2xl font-bold mb-4">Episódios</h2>
           <div className="border-b border-gray-700 mb-4">
@@ -86,7 +76,7 @@ export default async function SeriesDetailPage({ params, searchParams }: { param
                 <Link
                   key={season.id}
                   href={`/tv/${seriesId}?season=${season.season_number}`}
-                  scroll={false} // Evita que a página role para o topo ao trocar de aba
+                  scroll={false}
                   className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${selectedSeasonNumber === season.season_number ? 'border-pink-500 text-pink-500' : 'border-transparent text-gray-400 hover:text-white hover:border-gray-500'}`}
                 >
                   {season.name}

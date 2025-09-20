@@ -53,6 +53,16 @@ export interface Credits {
   cast: CastMember[];
 }
 
+// TIPO ADICIONADO PARA O SITEMAP
+interface SitemapMedia {
+  id: number;
+  release_date?: string;
+  first_air_date?: string;
+  last_air_date?: string;
+  name?: string;
+  title?: string;
+}
+
 
 const API_KEY = '06c4ad81ee9f810d3547bf95fd227bd4';
 const BASE_URL = 'https://api.themoviedb.org/3';
@@ -85,13 +95,11 @@ export function getImageUrl(path: string | null, size: 'w500' | 'original' = 'w5
     return `https://image.tmdb.org/t/p/${size}${path}`;
 }
 
-// NOVA FUNÇÃO para buscar por categorias específicas
 export async function discoverMedia(mediaType: 'movie' | 'tv', params: Record<string, string>): Promise<Media[]> {
     const data = await fetchData<{ results: Media[] }>(`discover/${mediaType}`, params);
     return data.results.map(m => ({ ...m, media_type: mediaType }));
 }
 
-// Funções existentes...
 export async function getTrendingMovies(): Promise<Media[]> {
   const data = await fetchData<{ results: Media[] }>('trending/movie/week');
   return data.results.map(m => ({...m, media_type: 'movie'}));
@@ -141,31 +149,22 @@ export async function searchMedia(query: string): Promise<Media[]> {
     .map(item => ({ ...item, media_type: item.media_type as 'movie' | 'tv' }));
 }
 
-// IDs de Gênero exportados para uso nas páginas
 export { GENRES };
-// Adicione esta função no final do arquivo
-export async function getAllMedia(mediaType: 'movie' | 'tv', totalPages: number): Promise<{ id: number; release_date?: string; first_air_date?: string; last_air_date?: string, name?: string, title?: string }[]> {
-  let allItems: any[] = [];
-  // A API do TMDB permite no máximo 500 páginas
+
+// FUNÇÃO ATUALIZADA COM O TIPO CORRETO
+export async function getAllMedia(mediaType: 'movie' | 'tv', totalPages: number): Promise<SitemapMedia[]> {
+  let allItems: SitemapMedia[] = [];
   const pagesToFetch = Math.min(totalPages, 500); 
 
   for (let i = 1; i <= pagesToFetch; i++) {
     try {
-      const data = await fetchData<{ results: any[] }>(`${mediaType}/popular`, { page: String(i) });
+      const data = await fetchData<{ results: SitemapMedia[] }>(`${mediaType}/popular`, { page: String(i) });
       if (data.results) {
         allItems = allItems.concat(data.results);
       }
     } catch (error) {
       console.error(`Failed to fetch page ${i} for ${mediaType}:`, error);
-      // Continua para a próxima página em caso de erro
     }
   }
-  return allItems.map(item => ({ 
-    id: item.id, 
-    release_date: item.release_date,
-    first_air_date: item.first_air_date,
-    last_air_date: item.last_air_date,
-    name: item.name,
-    title: item.title,
-  }));
+  return allItems;
 }

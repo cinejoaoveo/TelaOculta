@@ -1,6 +1,8 @@
 import { getMovieDetails, getCredits, getImageUrl } from '@/lib/tmdb';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Suspense } from 'react';
+import Loading from '@/components/Loading'; // Importando o componente de Loading
 
 // Função para gerar as estrelas de avaliação
 function StarRating({ rating }: { rating: number }) {
@@ -22,17 +24,10 @@ function formatRuntime(minutes: number): string {
   return `${h}h ${m}m`;
 }
 
-type MovieDetailPageProps = {
-  params: { id: string };
-};
-
-// VERSÃO FINAL COM A DESCRIÇÃO NECESSÁRIA
-// @ts-expect-error O Next.js está a reportar um erro de tipo incorreto para páginas async.
-export default async function MovieDetailPage({ params }: MovieDetailPageProps) {
-  const movieId = Number(params.id);
+// --- NOVO COMPONENTE ASSÍNCRONO PARA BUSCAR OS DADOS ---
+async function MovieContent({ movieId }: { movieId: number }) {
   const movie = await getMovieDetails(movieId);
   const credits = await getCredits('movie', movieId);
-
   const rating = Math.round((movie.vote_average || 0) / 2);
 
   return (
@@ -107,5 +102,16 @@ export default async function MovieDetailPage({ params }: MovieDetailPageProps) 
         )}
       </div>
     </div>
+  );
+}
+
+// --- A PÁGINA EM SI NÃO É MAIS ASYNC ---
+export default function MovieDetailPage({ params }: { params: { id: string } }) {
+  const movieId = Number(params.id);
+
+  return (
+    <Suspense fallback={<div className="h-screen w-full flex items-center justify-center"><Loading /></div>}>
+      <MovieContent movieId={movieId} />
+    </Suspense>
   );
 }

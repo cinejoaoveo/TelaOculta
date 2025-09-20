@@ -26,8 +26,8 @@ type MovieDetailPageProps = {
   params: { id: string };
 };
 
-// CORREÇÃO: TROCADO @ts-ignore POR @ts-expect-error
-// @ts-expect-error
+// VERSÃO FINAL COM A DESCRIÇÃO NECESSÁRIA
+// @ts-expect-error O Next.js está a reportar um erro de tipo incorreto para páginas async.
 export default async function MovieDetailPage({ params }: MovieDetailPageProps) {
   const movieId = Number(params.id);
   const movie = await getMovieDetails(movieId);

@@ -1,6 +1,7 @@
 import { getMovieDetails, getCredits, getImageUrl } from '@/lib/tmdb';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
 // Função para gerar as estrelas de avaliação
 function StarRating({ rating }: { rating: number }) {
@@ -22,16 +23,10 @@ function formatRuntime(minutes: number): string {
   return `${h}h ${m}m`;
 }
 
-// TIPO ADICIONADO PARA MAIOR CLAREZA E CORREÇÃO DO ERRO
-type MovieDetailPageProps = {
-  params: { id: string };
-};
-
-export default async function MovieDetailPage({ params }: MovieDetailPageProps) {
-  const movieId = Number(params.id);
+// --- MUDANÇA PRINCIPAL: COMPONENTE INTERNO PARA BUSCAR OS DADOS ---
+async function MovieContent({ movieId }: { movieId: number }) {
   const movie = await getMovieDetails(movieId);
   const credits = await getCredits('movie', movieId);
-
   const rating = Math.round((movie.vote_average || 0) / 2);
 
   return (
@@ -106,5 +101,17 @@ export default async function MovieDetailPage({ params }: MovieDetailPageProps) 
         )}
       </div>
     </div>
+  );
+}
+
+
+// A PÁGINA EM SI NÃO É MAIS ASYNC
+export default function MovieDetailPage({ params }: { params: { id: string } }) {
+  const movieId = Number(params.id);
+
+  return (
+    <Suspense fallback={<div className="h-screen w-full flex items-center justify-center text-white">A carregar...</div>}>
+      <MovieContent movieId={movieId} />
+    </Suspense>
   );
 }

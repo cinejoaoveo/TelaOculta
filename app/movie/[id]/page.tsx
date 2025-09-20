@@ -22,8 +22,13 @@ function formatRuntime(minutes: number): string {
   return `${h}h ${m}m`;
 }
 
-// A PÁGINA AGORA É UM COMPONENTE ASSÍNCRONO DIRETAMENTE
-export default async function MovieDetailPage({ params }: { params: { id: string } }) {
+// A PÁGINA AGORA É UM COMPONENTE ASSÍNCRONO DIRETAMENTE (COM A CORREÇÃO)
+export default async function MovieDetailPage({ 
+  params 
+}: { 
+  params: { id: string };
+  searchParams?: { [key: string]: string | string[] | undefined }; // Adicione esta linha
+}) {
   const movieId = Number(params.id);
   
   // A busca de dados acontece diretamente aqui

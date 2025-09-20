@@ -37,8 +37,9 @@ export default function AuthPage() {
         await updateProfile(userCredential.user, { displayName: name });
       }
       router.push('/'); // Redireciona para a home após o sucesso
-    } catch (err: any) {
-      setError(getFirebaseErrorMessage(err.code));
+    } catch (err) {
+      const errorCode = err instanceof Object && 'code' in err ? String(err.code) : 'unknown-error';
+      setError(getFirebaseErrorMessage(errorCode));
     } finally {
       setIsLoading(false);
     }
@@ -50,8 +51,9 @@ export default function AuthPage() {
     try {
       await signInWithPopup(auth, googleProvider);
       router.push('/'); // Redireciona para a home
-    } catch (err: any) {
-      setError(getFirebaseErrorMessage(err.code));
+    } catch (err) {
+      const errorCode = err instanceof Object && 'code' in err ? String(err.code) : 'unknown-error';
+      setError(getFirebaseErrorMessage(errorCode));
     } finally {
       setIsLoading(false);
     }

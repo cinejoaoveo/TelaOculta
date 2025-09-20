@@ -1,4 +1,4 @@
-import { getSeriesDetails, getCredits, getImageUrl, getSeasonDetails } from '@/lib/tmdb';
+import { getSeriesDetails, getImageUrl, getSeasonDetails } from '@/lib/tmdb';
 import Image from 'next/image';
 import Link from 'next/link';
 

@@ -1,4 +1,4 @@
-import { discoverMedia, Media } from '@/lib/tmdb';
+import { discoverMedia } from '@/lib/tmdb';
 import MediaCard from '@/components/MediaCard';
 
 interface CategoryPageProps {

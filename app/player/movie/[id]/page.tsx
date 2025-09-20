@@ -1,3 +1,5 @@
+// em app/player/movie/[id]/page.tsx
+
 import { getMovieDetails } from '@/lib/tmdb';
 import Player from '@/components/Player';
 import Loading from '@/components/Loading';
@@ -15,13 +17,12 @@ async function MoviePlayer({ id }: { id: string }) {
     );
 }
 
-
-// A página que será renderizada (COM A CORREÇÃO)
+// A página que será renderizada (COM A CORREÇÃO DE TIPO)
 export default function MoviePlayerPage({ 
     params 
 }: { 
     params: { id: string };
-    searchParams?: { [key: string]: string | string[] | undefined };
+    searchParams?: { [key: string]: string | string[] | undefined }; // Esta parte corrige o erro
 }) {
     return (
         <Suspense fallback={<div className="h-screen flex items-center justify-center"><Loading /></div>}>

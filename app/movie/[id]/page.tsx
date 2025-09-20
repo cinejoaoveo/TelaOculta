@@ -2,7 +2,7 @@ import { getMovieDetails, getCredits, getImageUrl } from '@/lib/tmdb';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Suspense } from 'react';
-import Loading from '@/components/Loading'; // Importando o componente de Loading
+import Loading from '@/components/Loading';
 
 // Função para gerar as estrelas de avaliação
 function StarRating({ rating }: { rating: number }) {

@@ -16,8 +16,13 @@ async function MoviePlayer({ id }: { id: string }) {
 }
 
 
-// A página que será renderizada
-export default function MoviePlayerPage({ params }: { params: { id: string } }) {
+// A página que será renderizada (COM A CORREÇÃO)
+export default function MoviePlayerPage({ 
+    params 
+}: { 
+    params: { id: string };
+    searchParams?: { [key: string]: string | string[] | undefined };
+}) {
     return (
         <Suspense fallback={<div className="h-screen flex items-center justify-center"><Loading /></div>}>
             <MoviePlayer id={params.id} />

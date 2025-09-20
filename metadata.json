@@ -1,5 +1,0 @@
-{
-  "name": "TelaOculta",
-  "description": "A modern, responsive movie and series catalog application built with Angular and styled with Tailwind CSS. It uses the TMDB API to fetch and display media content.",
-  "requestFramePermissions": []
-}

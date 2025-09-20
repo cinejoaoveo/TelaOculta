@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Suspense } from "react"; // 1. Importar o Suspense
 
 export const metadata: Metadata = {
   title: "TelaOculta",
@@ -20,7 +21,10 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body>
         <div className="min-h-screen bg-black text-white flex flex-col">
-          <Header />
+          {/* 2. Envolver o Header com Suspense */}
+          <Suspense>
+            <Header />
+          </Suspense>
           <main className="flex-grow">
             {children}
           </main>

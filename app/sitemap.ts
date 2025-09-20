@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { getAllMedia } from '@/lib/tmdb';
 
-const BASE_URL = 'https://www.telaoculta.top'; // SUBSTITUA PELO SEU DOMÍNIO QUANDO TIVER UM
+const BASE_URL = 'https://www.telaoculta.top';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -10,20 +10,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/series`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
   ];
 
-  const movies = await getAllMedia('movie', 500); 
-  const movieRoutes = movies.map((movie) => ({
+  // Reduzido de 500 para 20 para evitar o timeout
+  const movies = await getAllMedia('movie', 20); 
+  const movieRoutes: MetadataRoute.Sitemap = movies.map((movie) => ({
     url: `${BASE_URL}/movie/${movie.id}`,
     lastModified: movie.release_date ? new Date(movie.release_date) : new Date(),
-    // CORREÇÃO APLICADA AQUI
     changeFrequency: 'monthly',
     priority: 0.6,
   }));
 
-  const series = await getAllMedia('tv', 500);
-  const seriesRoutes = series.map((serie) => ({
+  // Reduzido de 500 para 20 para evitar o timeout
+  const series = await getAllMedia('tv', 20);
+  const seriesRoutes: MetadataRoute.Sitemap = series.map((serie) => ({
     url: `${BASE_URL}/tv/${serie.id}`,
     lastModified: serie.last_air_date ? new Date(serie.last_air_date) : new Date(),
-    // CORREÇÃO APLICADA AQUI
     changeFrequency: 'weekly',
     priority: 0.6,
   }));

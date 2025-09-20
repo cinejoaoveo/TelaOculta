@@ -1,8 +1,6 @@
 import { getMovieDetails, getCredits, getImageUrl } from '@/lib/tmdb';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Suspense } from 'react';
-import Loading from '@/components/Loading';
 
 // Função para gerar as estrelas de avaliação
 function StarRating({ rating }: { rating: number }) {
@@ -24,8 +22,11 @@ function formatRuntime(minutes: number): string {
   return `${h}h ${m}m`;
 }
 
-// --- NOVO COMPONENTE ASSÍNCRONO PARA BUSCAR OS DADOS ---
-async function MovieContent({ movieId }: { movieId: number }) {
+// A PÁGINA AGORA É UM COMPONENTE ASSÍNCRONO DIRETAMENTE
+export default async function MovieDetailPage({ params }: { params: { id: string } }) {
+  const movieId = Number(params.id);
+  
+  // A busca de dados acontece diretamente aqui
   const movie = await getMovieDetails(movieId);
   const credits = await getCredits('movie', movieId);
   const rating = Math.round((movie.vote_average || 0) / 2);
@@ -102,16 +103,5 @@ async function MovieContent({ movieId }: { movieId: number }) {
         )}
       </div>
     </div>
-  );
-}
-
-// --- A PÁGINA EM SI NÃO É MAIS ASYNC ---
-export default function MovieDetailPage({ params }: { params: { id: string } }) {
-  const movieId = Number(params.id);
-
-  return (
-    <Suspense fallback={<div className="h-screen w-full flex items-center justify-center"><Loading /></div>}>
-      <MovieContent movieId={movieId} />
-    </Suspense>
   );
 }

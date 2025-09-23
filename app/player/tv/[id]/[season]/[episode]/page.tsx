@@ -1,12 +1,17 @@
-import { getSeriesDetails } from '@/lib/tmdb';
+import { getSeriesDetails, getRecommendations } from '@/lib/tmdb';
 import Player from '@/components/Player';
 import Loading from '@/components/Loading';
 import { Suspense } from 'react';
 
-// Componente que busca os dados da série
+// Componente que busca os dados da série e as recomendações
 async function SeriesPlayer({ id, season, episode }: { id: string, season: string, episode: string }) {
-    const series = await getSeriesDetails(Number(id));
+    const numericId = Number(id);
+    const series = await getSeriesDetails(numericId);
+    // Busca as recomendações para a série atual
+    const recommendations = await getRecommendations('tv', numericId);
+    
     const seriesTitle = series.name ? `${series.name} - T${season} E${episode}` : `Série - T${season} E${episode}`;
+    
     return (
         <Player 
             mediaType="tv"
@@ -14,6 +19,7 @@ async function SeriesPlayer({ id, season, episode }: { id: string, season: strin
             season={season}
             episode={episode}
             title={seriesTitle}
+            recommendations={recommendations} // Passa as recomendações para o player
         />
     );
 }

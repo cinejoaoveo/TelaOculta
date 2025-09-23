@@ -1,9 +1,8 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-
-// Definimos os tipos de fontes de vídeo que teremos
-type PlayerSource = 'superflix' | 'primevicio';
+import { useMemo } from 'react';
+import { Media } from '@/lib/tmdb'; // Importar o tipo Media
+import MediaCard from './MediaCard'; // Importar o MediaCard para exibir as recomendações
 
 interface PlayerProps {
   mediaType: 'movie' | 'tv';
@@ -11,56 +10,22 @@ interface PlayerProps {
   season?: string;
   episode?: string;
   title: string;
+  recommendations: Media[]; // Adicionar prop para receber as recomendações
 }
 
-export default function Player({ mediaType, id, season, episode, title }: PlayerProps) {
-  // Estado para controlar a fonte do player selecionada, começando com 'superflix'
-  const [source, setSource] = useState<PlayerSource>('superflix');
-
-  // Gera a URL do player com base na fonte selecionada e nos dados da mídia
+export default function Player({ mediaType, id, season, episode, title, recommendations }: PlayerProps) {
   const playerUrl = useMemo(() => {
     if (mediaType === 'movie') {
-      if (source === 'superflix') {
-        return `https://superflixapi.asia/filme/${id}`;
-      } else if (source === 'primevicio') {
-        return `https://primevicio.vercel.app/embed/movie/${id}`;
-      }
+      return `https://primevicio.vercel.app/embed/movie/${id}`;
     } else if (mediaType === 'tv' && season && episode) {
-      if (source === 'superflix') {
-        return `https://superflixapi.asia/serie/${id}/${season}/${episode}/`;
-      } else if (source === 'primevicio') {
-        return `https://primevicio.vercel.app/embed/tv/${id}/${season}/${episode}`;
-      }
+      return `https://primevicio.vercel.app/embed/tv/${id}/${season}/${episode}`;
     }
-    return ''; // Retorna vazio se não houver URL
-  }, [source, mediaType, id, season, episode]);
-
-  // Função para aplicar estilo dinâmico ao botão ativo
-  const getButtonClass = (buttonSource: PlayerSource) => {
-    return source === buttonSource
-      ? 'bg-pink-600 text-white' // Estilo do botão ativo
-      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'; // Estilo do botão inativo
-  };
+    return '';
+  }, [mediaType, id, season, episode]);
 
   return (
     <div className="pt-24 container mx-auto px-4 md:px-8 pb-12">
       <h1 className="text-2xl md:text-4xl font-bold mb-4">{title}</h1>
-
-      {/* Botões de Seleção de Player */}
-      <div className="flex items-center space-x-4 mb-4">
-        <button
-          onClick={() => setSource('superflix')}
-          className={`px-5 py-2 rounded-full font-semibold transition-colors duration-200 ${getButtonClass('superflix')}`}
-        >
-          Servidor 1
-        </button>
-        <button
-          onClick={() => setSource('primevicio')}
-          className={`px-5 py-2 rounded-full font-semibold transition-colors duration-200 ${getButtonClass('primevicio')}`}
-        >
-          Servidor 2
-        </button>
-      </div>
 
       {/* Iframe do Player */}
       {playerUrl && (
@@ -73,9 +38,24 @@ export default function Player({ mediaType, id, season, episode, title }: Player
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
             referrerPolicy="origin"
-            // O atributo SANDBOX foi REMOVIDO para evitar o bloqueio
             className="w-full h-full"
           ></iframe>
+        </div>
+      )}
+
+      {/* Seção de Recomendações */}
+      {recommendations && recommendations.length > 0 && (
+        <div className="mt-16">
+          <h2 className="text-2xl font-bold mb-4">Recomendações</h2>
+          <div className="relative -mx-4 md:-mx-6">
+            <div className="flex space-x-4 overflow-x-auto py-4 px-4 md:px-6 scrollbar-thin">
+              {recommendations.map((item) => (
+                <div key={item.id} className="flex-shrink-0 w-40 md:w-52">
+                  <MediaCard media={item} />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       )}
     </div>

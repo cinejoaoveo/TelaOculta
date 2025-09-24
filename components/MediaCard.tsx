@@ -35,8 +35,8 @@ export default function MediaCard({ media }: MediaCardProps) {
           <Image
             src="https://i.ibb.co/Q7V0pybV/bot-o-play-sem-bg.png"
             alt="Play Icon"
-            width={70} // Tamanho fixo para o ícone
-            height={70} // Tamanho fixo para o ícone
+            width={80} // Tamanho fixo para o ícone
+            height={80} // Tamanho fixo para o ícone
             className="object-contain" // Garante que a imagem não seja comprimida ou esticada
           />
 

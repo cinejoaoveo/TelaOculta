@@ -14,7 +14,7 @@ export async function generateMetadata(
   const movieId = Number(params.id);
   const movie = await getMovieDetails(movieId);
 
-  const title = `TelaOculta - Assistir ${movie.title || 'Filme'} Online Gratis (Filme HD)`;
+  const title = `TelaOculta - Assistir ${movie.title || 'Filme'} Online (Filme HD)`;
   const description = movie.overview;
 
   return {

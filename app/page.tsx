@@ -13,8 +13,8 @@ export default async function HomePage() {
   return (
     <div>
       {currentHeroItem && (
-        // ALTURA DO HERO REDUZIDA PARA CORRIGIR O ESPAÇAMENTO
-        <div className="relative w-full h-[70vh] md:h-[80vh] text-white overflow-hidden">
+        // ALTURA DO HERO AJUSTADA PARA MOBILE
+        <div className="relative w-full h-[65vh] sm:h-[75vh] md:h-[85vh] text-white overflow-hidden">
           <Image
             src={getImageUrl(currentHeroItem.backdrop_path, 'original')}
             alt={currentHeroItem.title || currentHeroItem.name || 'Backdrop'}
@@ -46,22 +46,21 @@ export default async function HomePage() {
                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" /></svg>
                   Assistir
                 </Link>
-                {/* O BOTÃO "MINHA LISTA" FOI REMOVIDO DAQUI */}
               </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* CONTEÚDO PUXADO PARA CIMA COM MARGEM NEGATIVA */}
-      <div className="px-4 md:px-16 space-y-12 -mt-20 md:-mt-32 relative z-20 pb-12">
+      {/* MARGEM NEGATIVA AJUSTADA */}
+      <div className="px-4 md:px-16 space-y-12 -mt-16 md:-mt-24 relative z-20 pb-12">
         {mediaRows.map((row) => (
           <section key={row.title}>
             <h2 className="text-2xl font-bold mb-4">{row.title}</h2>
             <div className="relative -mx-4 md:-mx-6">
               <div className="flex space-x-4 overflow-x-auto py-4 px-4 md:px-6 scrollbar-thin">
                 {row.items.map((item) => (
-                  <div key={item.id} className="flex-shrink-0 w-40 md:w-52">
+                  <div key={item.id} className="flex-shrink-0 w-40 sm:w-44 md:w-52">
                     <MediaCard media={item} />
                   </div>
                 ))}

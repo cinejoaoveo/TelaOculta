@@ -15,7 +15,7 @@ export async function generateMetadata(
   const seriesId = Number(params.id);
   const series = await getSeriesDetails(seriesId);
 
-  const title = `TelaOculta - Assistir ${series.name || 'Série'} Online Gratis (Série Completa)`;
+  const title = `TelaOculta - Assistir ${series.name || 'Série'} Online (Série Completa)`;
   const description = series.overview;
 
   return {

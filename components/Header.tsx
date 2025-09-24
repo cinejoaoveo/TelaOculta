@@ -35,18 +35,15 @@ export default function Header() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
-  // Lógica da Busca com Sugestões
   const [searchTerm, setSearchTerm] = useState(searchParams.get('q') || '');
   const [suggestions, setSuggestions] = useState<Media[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Fecha o menu móvel quando a rota muda
   useEffect(() => {
     setIsMenuOpen(false);
   }, [pathname]);
 
-  // Lógica da busca com debounce
   useEffect(() => {
     const term = searchTerm.trim();
     if (term.length > 2) {
@@ -73,14 +70,14 @@ export default function Header() {
     if (query) {
       router.push(`/search?q=${encodeURIComponent(query)}`);
       setSuggestions([]);
-      setIsMenuOpen(false); // Fecha o menu após a busca
+      setIsMenuOpen(false);
     }
   };
   
   const handleSuggestionClick = () => {
     setSearchTerm('');
     setSuggestions([]);
-    setIsMenuOpen(false); // Fecha o menu ao clicar na sugestão
+    setIsMenuOpen(false);
   };
 
   const navLinks = [
@@ -99,7 +96,6 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Impede o scroll da página quando o menu mobile está aberto
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -124,11 +120,8 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* ===== MUDANÇA AQUI ===== */}
-          {/* Navegação Desktop com TODOS os links */}
           <nav className="hidden md:flex flex-grow justify-center">
             <div className="flex items-center space-x-1 bg-gray-900/80 backdrop-blur-sm px-3 py-2 rounded-full">
-              {/* Removi o ".slice(0, 3)" para mostrar todos os links */}
               {navLinks.map((link) => (
                 <Link key={link.path} href={link.path} className="px-3 py-1 rounded-full text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors duration-200">
                   <span>{link.label}</span>
@@ -136,9 +129,8 @@ export default function Header() {
               ))}
             </div>
           </nav>
-          {/* ===== FIM DA MUDANÇA ===== */}
 
-          {/* Itens da Direita (Desktop) */}
+          {/* ===== MUDANÇA AQUI: "Minha Conta" foi removido ===== */}
           <div className="hidden md:flex flex-shrink-0 items-center space-x-4">
             <div className="relative">
               <form onSubmit={handleSearchSubmit}>
@@ -170,14 +162,9 @@ export default function Header() {
                 </div>
               )}
             </div>
-            <div>
-              <Link href="/auth" className="text-gray-300 hover:text-white font-semibold text-sm">
-                Minha Conta
-              </Link>
-            </div>
           </div>
+          {/* ===== FIM DA MUDANÇA ===== */}
 
-          {/* Botão do Menu Mobile */}
           <div className="md:hidden">
             <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white">
               {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
@@ -186,10 +173,8 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Painel do Menu Mobile */}
       <div className={`md:hidden fixed top-0 left-0 w-full h-full bg-black/95 backdrop-blur-sm z-40 transition-transform duration-300 ease-in-out ${isMenuOpen ? 'transform-none' : '-translate-y-full'}`}>
         <div className="container mx-auto mt-20 p-4">
-            {/* Busca Mobile */}
             <div className="relative mb-8">
               <form onSubmit={handleSearchSubmit}>
                 <input
@@ -220,17 +205,15 @@ export default function Header() {
               )}
             </div>
 
-            {/* Links de Navegação Mobile */}
-            <nav className="flex flex-col items-center space-y-4">
+            {/* ===== MUDANÇA AQUI: "Minha Conta" foi removido ===== */}
+            <nav className="flex flex-col items-center space-y-6">
                {navLinks.map((link) => (
                 <Link key={link.path} href={link.path} className="text-xl text-gray-300 hover:text-white transition-colors duration-200">
                   <span>{link.label}</span>
                 </Link>
               ))}
-               <Link href="/auth" className="mt-4 text-xl text-gray-300 hover:text-white transition-colors duration-200">
-                  <span>Minha Conta</span>
-                </Link>
             </nav>
+            {/* ===== FIM DA MUDANÇA ===== */}
         </div>
       </div>
     </>

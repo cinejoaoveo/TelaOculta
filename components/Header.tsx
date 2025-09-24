@@ -124,16 +124,19 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Navegação Desktop */}
+          {/* ===== MUDANÇA AQUI ===== */}
+          {/* Navegação Desktop com TODOS os links */}
           <nav className="hidden md:flex flex-grow justify-center">
             <div className="flex items-center space-x-1 bg-gray-900/80 backdrop-blur-sm px-3 py-2 rounded-full">
-              {navLinks.slice(0, 3).map((link) => ( // Mostra os 3 primeiros links
+              {/* Removi o ".slice(0, 3)" para mostrar todos os links */}
+              {navLinks.map((link) => (
                 <Link key={link.path} href={link.path} className="px-3 py-1 rounded-full text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors duration-200">
                   <span>{link.label}</span>
                 </Link>
               ))}
             </div>
           </nav>
+          {/* ===== FIM DA MUDANÇA ===== */}
 
           {/* Itens da Direita (Desktop) */}
           <div className="hidden md:flex flex-shrink-0 items-center space-x-4">

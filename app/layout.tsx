@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
-  title: "TelaOculta",
+  title: "TelaOculta - Assistir Filmes e Séries Online HD, Filmes Online, Séries Online.",
   description: "Seu novo site de filmes e séries.",
   icons: {
     icon: 'https://i.ibb.co/hRR6bVmk/Tela-Oculta-Icon.png',

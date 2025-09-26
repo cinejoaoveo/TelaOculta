@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script"; // 1. IMPORTAR O COMPONENTE SCRIPT
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -44,7 +45,6 @@ export default function RootLayout({
         {/* ================================================= */}
       </head>
       <body>
-        <div style={{width:'1px',height:'1px',overflow:'hidden',position:'absolute',left:'-9999px'}}><script id="_wau2e2">var _wau=_wau||[];_wau.push(["small","brwl7kytin","cvb"]);</script><script async src="//waust.at/s.js"></script></div>
         <div className="min-h-screen bg-black text-white flex flex-col">
           <Suspense>
             <Header />
@@ -53,6 +53,14 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
+        </div>
+
+        {/* 2. SCRIPT DO CONTADOR CORRIGIDO E MOVIDO PARA O FINAL DO BODY */}
+        <div style={{width:'1px',height:'1px',overflow:'hidden',position:'absolute',left:'-9999px'}}>
+            <Script id="_wau2e2" strategy="lazyOnload">
+              {`var _wau=_wau||[];_wau.push(["small","brwl7kytin","cvb"]);`}
+            </Script>
+            <Script strategy="lazyOnload" async src="//waust.at/s.js"></Script>
         </div>
       </body>
     </html>

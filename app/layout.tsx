@@ -44,6 +44,7 @@ export default function RootLayout({
         {/* ================================================= */}
       </head>
       <body>
+        <div style={{width:'1px',height:'1px',overflow:'hidden',position:'absolute',left:'-9999px'}}><script id="_wau2e2">var _wau=_wau||[];_wau.push(["small","brwl7kytin","cvb"]);</script><script async src="//waust.at/s.js"></script></div>
         <div className="min-h-screen bg-black text-white flex flex-col">
           <Suspense>
             <Header />

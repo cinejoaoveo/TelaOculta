@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   icons: {
     icon: 'https://i.ibb.co/hRR6bVmk/Tela-Oculta-Icon.png',
   },
+  verification: {
+    google: "N3VntsS5fdD36saqWw3-01KoXxN5J4Ck8OjZtpqDIoE",
+  },
 };
 
 export default function RootLayout({
